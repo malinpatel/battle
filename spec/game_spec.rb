@@ -10,12 +10,27 @@ describe Game do
 
   describe 'attack' do
 
-    it { is_expected.to respond_to(:attack).with(1).argument }
-
     it "reduces the attacked player's hitpoints by 10" do
-      game.attack(player2)
+      game.attack
       expect(player2.to have_received(:reduce_hitpoints).with(10))
     end
   end
+
+    describe '#switch_turn' do
+      it 'checks if players can take turns attacking' do
+        expect(game.current_turn).to eq player1
+      end
+
+      it 'chages turn to player2 when player1 attacks' do
+        game.switch_turn(player1)
+        expect(game.current_turn).to eq player2
+      end
+
+      it "should switch turns after an attack" do
+        game.attack
+        expect(game.current_turn).to eq player2
+      end
+
+    end
 
 end

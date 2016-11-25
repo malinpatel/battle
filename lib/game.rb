@@ -1,15 +1,44 @@
-require 'player'
+require_relative './player.rb'
 
 class Game
 
-  attr_reader :players
+  attr_reader :players, :current_turn
 
   def initialize(player1, player2)
     @players = [player1, player2]
+    @current_turn = player1
   end
 
-  def attack(player)
-    player.reduce_hitpoints(10)
+  def player1
+    @players.first
   end
+
+  def player2
+    @players.last
+  end
+
+  def attack
+    if @current_turn == player1
+      player2.reduce_hitpoints
+      switch_turn(player1)
+      "#{player2.name}'s turn'"
+    else
+      player1.reduce_hitpoints
+      switch_turn(player2)
+      "#{player1.name}'s turn"
+    end
+
+  end
+
+  def switch_turn(the_player)
+    @current_turn = opponent_of(the_player)
+  end
+
+  private
+
+  def opponent_of(the_player)
+    @players.select {|player| player != the_player}.first
+  end
+
 
 end

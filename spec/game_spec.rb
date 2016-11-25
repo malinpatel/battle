@@ -4,7 +4,7 @@ require 'player'
 describe Game do
 
   let(:player1) { double(:player1, hitpoints: 100) }
-  let(:player2) { spy(:player2, hitpoints: 100) }
+  let(:player2) { spy(:player2, name: "Mal", hitpoints: 100) }
 
   subject(:game) { described_class.new(player1, player2) }
 
@@ -30,7 +30,16 @@ describe Game do
         game.attack
         expect(game.current_turn).to eq player2
       end
+    end
 
+    describe '#lose' do
+      before do
+        allow(player2).to receive(:hitpoints) {0}
+      end
+
+      it "should display loser message" do
+        expect(game.lose).to eq "Mal has lost!"
+      end
     end
 
 end

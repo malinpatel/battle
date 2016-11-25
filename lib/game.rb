@@ -36,8 +36,15 @@ class Game
     "#{player2.name} has lost!" if player2.hitpoints == 0
   end
 
+  def game_over?
+    losing_players.any?
+  end
 
   private
+
+  def losing_players
+    players.select { |player| player.hitpoints <= 0 }
+  end
 
   def opponent_of(the_player)
     @players.select {|player| player != the_player}.first

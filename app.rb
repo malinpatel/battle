@@ -23,11 +23,26 @@ enable :sessions
     erb(:play)
   end
 
- get '/attack' do
-   @game = $game
-   erb(:attack)
-   redirect '/play'
- end
+  post '/attack' do
+    if $game.game_over?
+      redirect '/game_over'
+    else
+      redirect '/attack'
+    end
+  end
+
+   get '/attack' do
+     @game = $game
+     erb(:attack)
+     redirect '/play'
+   end
+
+   get '/game_over' do
+     @game = $game
+     erb(:game_over)
+   end
+
+
 
   run! if app_file == $0
 

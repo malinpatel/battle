@@ -14,10 +14,8 @@ enable :sessions
 
   post '/names' do
     p params
-    player1 = Player.new(params[:player1])
-    player2 = Player.new(params[:player2])
-    $game = Game.new(player1, player2)
-    redirect to '/play'
+    $game = Game.new(Player.new(params[:player1]), Player.new(params[:player2]))
+    redirect '/play'
   end
 
   get '/play' do
@@ -30,13 +28,6 @@ enable :sessions
    erb(:attack)
    redirect '/play'
  end
-
- get 'switch_name' do
-   @game = $game
-   erb(:switch_name)
-   redirect '/play'
- end
-
 
   run! if app_file == $0
 

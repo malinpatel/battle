@@ -21,11 +21,9 @@ class Game
     if @current_turn == player1
       player2.reduce_hitpoints
       switch_turn(player1)
-      "#{player2.name}'s turn'"
     else
       player1.reduce_hitpoints
       switch_turn(player2)
-      "#{player1.name}'s turn"
     end
 
   end
